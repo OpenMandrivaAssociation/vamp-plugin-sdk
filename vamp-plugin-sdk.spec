@@ -89,9 +89,13 @@ echo -e "\t"-rm *.o *.so >> Makefile
 # clean directory up so we can package the sources
 make clean
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 rm -rf %{buildroot}
