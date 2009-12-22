@@ -1,18 +1,21 @@
-%define	major 1
+%define	major 2
 %define libname	%mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
 %define staticdevelname %mklibname -d %{name} -s
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
-Version:	1.1b
-Release:	%mkrel 5
+Version:	2.1
+Release:	%mkrel 1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
 Source0:	http://downloads.sourceforge.net/vamp/vamp-plugin-sdk-%{version}.tar.gz
-Patch0:		%{name}-1.1b-Makefile.patch
-Patch1:		%{name}-1.1b-gcc43.patch
+
+# thanks fedora guys for these
+Patch0:         %{name}-2.0-libdir.patch
+Patch1:         %{name}-2.0-gcc44.patch
+
 BuildRequires:	libsndfile-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -57,14 +60,17 @@ applications that use %{name}.
 
 %prep
 
-%setup -q -n %{name}-v%{version}
-%patch0 -p1 -b .mk
-%patch1 -p1 -b .gcc43
+%setup -q 
+%patch0 -p1 -b .libdir
+%patch1 -p1 -b .gcc44
+sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
+sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 
 %build
-export CXXFLAGS=$RPM_OPT_FLAGS
-
-%make
+./configure
+make
+#%configure2_5x
+#%make
 
 %install
 rm -rf %{buildroot}
@@ -110,6 +116,9 @@ rm -rf %{buildroot}
 %doc examples
 %{_includedir}/*
 %{_libdir}/*.so
+%{_libdir}/vamp/*
+%{_bindir}/vamp-rdf-template-generator
+%{_bindir}/vamp-simple-host
 %{_libdir}/pkgconfig/*.pc
 
 %files -n %{staticdevelname}
