@@ -5,16 +5,14 @@
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
-Version:	2.1
-Release:	%mkrel 3
+Version:	2.2
+Release:	%mkrel 1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
 Source0:	http://downloads.sourceforge.net/vamp/vamp-plugin-sdk-%{version}.tar.gz
 
-# thanks fedora guys for these
-Patch0:         %{name}-2.0-libdir.patch
-Patch1:         %{name}-2.0-gcc44.patch
+Patch0:		%{name}-2.2-libdir.patch
 
 BuildRequires:	libsndfile-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -25,7 +23,7 @@ descriptive output (measurements or semantic observations).
 
 %package -n	%{libname}
 Summary:	An API for audio analysis and feature extraction plugins library
-Group:          System/Libraries
+Group:		System/Libraries
 
 %description -n	%{libname}
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
@@ -36,7 +34,7 @@ Summary:	Development files (headers) for SLV2
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}
-Requires:       pkgconfig
+Requires:	pkgconfig
 
 %description -n	%{develname}
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
@@ -62,15 +60,18 @@ applications that use %{name}.
 
 %setup -q 
 %patch0 -p1 -b .libdir
-%patch1 -p1 -b .gcc44
+
 sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 
 %build
-./configure
-make
-#%configure2_5x
-#%make
+./configure --prefix=/usr \
+		--libdir=%{_libdir} \
+		--bindir=%{_bindir} \
+		--sbindir=%{_sbindir} \
+		--includedir=%{_includedir}
+#make
+%make
 
 %install
 rm -rf %{buildroot}
