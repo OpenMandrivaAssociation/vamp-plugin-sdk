@@ -5,17 +5,16 @@
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
-Version:	2.2
-Release:	%mkrel 1
+Version:	2.3
+Release:	1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
-Source0:	http://downloads.sourceforge.net/vamp/vamp-plugin-sdk-%{version}.tar.gz
+Source0:	http://code.soundsoftware.ac.uk/attachments/download/224/%{name}-%{version}.tar.gz
 
-Patch0:		%{name}-2.2-libdir.patch
+Patch0:		%{name}-2.3-libdir.patch
 
 BuildRequires:	libsndfile-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
@@ -74,8 +73,6 @@ sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 %make
 
 %install
-rm -rf %{buildroot}
-
 # fix libdir
 find . -name '*.pc.in' -exec sed -i 's|/lib|/%{_lib}|' {} ';'
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
@@ -96,24 +93,11 @@ echo -e "\t"-rm *.o *.so >> Makefile
 # clean directory up so we can package the sources
 make clean
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files -n %{libname}
-%defattr(-,root,root,-)
 %doc COPYING README
 %{_libdir}/*.so.*
 
 %files -n %{develname}
-%defattr(-,root,root,-)
 %doc examples
 %{_includedir}/*
 %{_libdir}/*.so
@@ -123,6 +107,5 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/*.pc
 
 %files -n %{staticdevelname}
-%defattr(-,root,root,-)
 %{_libdir}/*.a
 
