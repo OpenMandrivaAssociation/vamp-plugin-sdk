@@ -1,2 +1,3 @@
 sources:
-  "vamp-plugin-sdk-2.3.tar.gz:"	5d25e41fea7c8d5a66004d5f4e430816ff1c8676
+  "vamp-plugin-sdk-2.3.tar.gz": 5d25e41fea7c8d5a66004d5f4e430816ff1c8676
+  vamp-plugin-sdk-2.4.tar.gz: b3da28e25cc05c38fe6fd75a27dbd7fe6aaf0f32

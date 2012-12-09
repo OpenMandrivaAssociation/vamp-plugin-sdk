@@ -5,16 +5,14 @@
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
-Version:	2.3
-Release:	1
+Version:	2.4
+Release:	%mkrel 1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
-Source0:	http://code.soundsoftware.ac.uk/attachments/download/224/%{name}-%{version}.tar.gz
-
-Patch0:		%{name}-2.3-libdir.patch
-
-BuildRequires:	libsndfile-devel
+Source0:	http://downloads.sourceforge.net/vamp/vamp-plugin-sdk-%{version}.tar.gz
+Patch0:         %{name}-2.4-libdir.patch
+BuildRequires:	pkgconfig(sndfile)
 
 %description
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
@@ -39,7 +37,8 @@ Requires:	pkgconfig
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
 descriptive output (measurements or semantic observations).
 
-The %{name}-devel package contains libraries and header files for developing
+The %{name}-devel package contains libraries
+and header files for developing
 applications that use %{name}.
 
 %package -n	%{staticdevelname}
@@ -59,16 +58,15 @@ applications that use %{name}.
 
 %setup -q 
 %patch0 -p1 -b .libdir
-
 sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 
 %build
 ./configure --prefix=/usr \
-		--libdir=%{_libdir} \
-		--bindir=%{_bindir} \
-		--sbindir=%{_sbindir} \
-		--includedir=%{_includedir}
+	    --libdir=%{_libdir} \
+	    --bindir=%{_bindir} \
+	    --sbindir=%{_sbindir} \
+	    --includedir=%{_includedir}
 #make
 %make
 
@@ -81,7 +79,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 # create Makefile for examples
 cd examples
-echo CXXFLAGS=$RPM_OPT_FLAGS -fpic >> Makefile
+echo CXXFLAGS=%{optflags} -fpic >> Makefile
 echo bundle: `ls *.o` >> Makefile
 echo -e "\t"g++ \$\(CXXFLAGS\) -shared -Wl,-Bsymbolic \
      -o vamp-example-plugins.so \
@@ -108,4 +106,3 @@ make clean
 
 %files -n %{staticdevelname}
 %{_libdir}/*.a
-
