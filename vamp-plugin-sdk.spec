@@ -12,7 +12,7 @@ Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
 Source0:	%{name}-vamp-plugin-sdk-v%{version}.tar.gz
 #mirror:	https://github.com/c4dm/vamp-plugin-sdk/releases
-#Patch0:         %{name}-2.4-libdir.patch
+Patch0:         %{name}-2.8-libdir.patch
 BuildRequires:	pkgconfig(sndfile)
 
 %description
@@ -58,7 +58,8 @@ applications that use %{name}.
 %prep
 
 %setup -q -n %{name}-%{name}-v%{version}
-#patch0 -p1 -b .libdir
+%autopatch -p1
+
 sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 
