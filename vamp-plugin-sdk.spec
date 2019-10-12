@@ -10,7 +10,7 @@ Release:	1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
-Source0:	http://downloads.sourceforge.net/vamp/vamp-plugin-sdk-%{version}.tar.gz
+Source0:	https://github.com/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v%{version}.tar.gz
 #Patch0:         %{name}-2.4-libdir.patch
 BuildRequires:	pkgconfig(sndfile)
 
@@ -56,7 +56,7 @@ applications that use %{name}.
 
 %prep
 
-%setup -q 
+%setup -q -n %{name}-%{name}-v%{version}
 #patch0 -p1 -b .libdir
 sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
