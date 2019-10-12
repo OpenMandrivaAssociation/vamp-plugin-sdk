@@ -10,7 +10,7 @@ Release:	1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
-Source0:	%{name}-{version}-vamp-plugin-sdk-%{version}.tar.gz
+Source0:	%{name}-%{version}-vamp-plugin-sdk-v%{version}.tar.gz
 #mirror:	https://github.com/c4dm/vamp-plugin-sdk/releases
 #Patch0:         %{name}-2.4-libdir.patch
 BuildRequires:	pkgconfig(sndfile)
