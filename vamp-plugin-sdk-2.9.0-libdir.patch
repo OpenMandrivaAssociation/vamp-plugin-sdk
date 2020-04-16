@@ -1,5 +1,5 @@
---- vamp-plugin-sdk-2.8.0/Makefile.in.libdir	2019-02-07 02:19:39.000000000 -0800
-+++ vamp-plugin-sdk-2.8.0/Makefile.in	2019-07-01 20:08:23.155170842 -0700
+--- vamp-plugin-sdk-2.9.0/Makefile.in.libdir	2019-11-12 06:17:03.000000000 -0800
++++ vamp-plugin-sdk-2.9.0/Makefile.in	2020-02-02 12:12:44.394371184 -0800
 @@ -74,8 +74,8 @@
  INSTALL_API_HEADERS	  = $(INSTALL_PREFIX)/include/vamp
  INSTALL_SDK_HEADERS	  = $(INSTALL_PREFIX)/include/vamp-sdk
@@ -10,7 +10,7 @@
 +INSTALL_PLUGINS		  = $(INSTALL_SDK_LIBS)/vamp
  INSTALL_BINARIES	  = $(INSTALL_PREFIX)/bin 
  
- INSTALL_SDK_LIBNAME	  = libvamp-sdk.so.2.8.0
+ INSTALL_SDK_LIBNAME	  = libvamp-sdk.so.2.9.0
 @@ -90,7 +90,7 @@
  INSTALL_HOSTSDK_STATIC    = libvamp-hostsdk.a
  INSTALL_HOSTSDK_LA        = libvamp-hostsdk.la

@@ -5,14 +5,13 @@
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
-Version:	2.8
+Version:	2.9
 Release:	1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
-Source0:	%{name}-vamp-plugin-sdk-v%{version}.tar.gz
-#mirror:	https://github.com/c4dm/vamp-plugin-sdk/releases
-Patch0:         %{name}-2.8-libdir.patch
+Source0:	https://github.com/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v%{version}.tar.gz
+Patch0:		vamp-plugin-sdk-2.9.0-libdir.patch
 BuildRequires:	pkgconfig(sndfile)
 
 %description
