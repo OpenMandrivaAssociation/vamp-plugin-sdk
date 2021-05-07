@@ -6,7 +6,7 @@
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
 Version:	2.10
-Release:	1
+Release:	2
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.vamp-plugins.org/
