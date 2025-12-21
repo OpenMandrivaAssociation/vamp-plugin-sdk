@@ -12,6 +12,11 @@ Group:		System/Libraries
 URL:		https://www.vamp-plugins.org/
 Source0:	https://github.com/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v%{version}.tar.gz
 Patch0:		vamp-plugin-sdk-2.10-libdir.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(sndfile)
 
 %description
