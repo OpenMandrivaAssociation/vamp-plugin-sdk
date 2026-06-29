@@ -1,12 +1,13 @@
 %define	major 2
-%define libname	%mklibname %{name} %{major}
+%define oldlibname %mklibname %{name} 2
+%define libname	%mklibname %{name}
 %define develname %mklibname -d %{name}
 %define staticdevelname %mklibname -d %{name} -s
 
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
 Version:	2.10
-Release:	3
+Release:	4
 License:	BSD
 Group:		System/Libraries
 URL:		https://www.vamp-plugins.org/
@@ -14,7 +15,6 @@ Source0:	https://github.com/c4dm/vamp-plugin-sdk/archive/vamp-plugin-sdk-v%{vers
 Patch0:		vamp-plugin-sdk-2.10-libdir.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(sndfile)
@@ -26,6 +26,7 @@ descriptive output (measurements or semantic observations).
 %package -n	%{libname}
 Summary:	An API for audio analysis and feature extraction plugins library
 Group:		System/Libraries
+%rename %{oldlibname}
 
 %description -n	%{libname}
 Vamp is an API for C and C++ plugins that process sampled audio data to produce
@@ -59,29 +60,22 @@ descriptive output (measurements or semantic observations).
 The %{name}-static package contains library files for developing static
 applications that use %{name}.
 
-%prep
-
-%setup -q -n %{name}-%{name}-v%{version}
-%autopatch -p1
+%prep -a
+%autosetup -p1 -n %{name}-%{name}-v%{version}
 
 sed -i 's|/lib/vamp|/%{_lib}/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 sed -i 's|/lib/|/%{_lib}/|g' src/vamp-hostsdk/PluginLoader.cpp
 
+%conf
+%configure
+
 %build
-./configure --prefix=/usr \
-	    --libdir=%{_libdir} \
-	    --bindir=%{_bindir} \
-	    --sbindir=%{_sbindir} \
-	    --includedir=%{_includedir}
-#make
-%make
+%make_build
 
 %install
 # fix libdir
 find . -name '*.pc.in' -exec sed -i 's|/lib|/%{_lib}|' {} ';'
-make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
-
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
+%make_install
 
 # create Makefile for examples
 cd examples
