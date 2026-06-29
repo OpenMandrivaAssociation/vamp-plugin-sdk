@@ -4,6 +4,11 @@
 %define develname %mklibname -d %{name}
 %define staticdevelname %mklibname -d %{name} -s
 
+# Workaround for apparent bug in clang 22.1.8-1
+%ifarch znver1
+%define _disable_lto 1
+%endif
+
 Summary:	An API for audio analysis and feature extraction plugins
 Name:		vamp-plugin-sdk
 Version:	2.10
